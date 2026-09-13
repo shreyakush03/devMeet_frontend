@@ -24,8 +24,10 @@ const Login = () => {
       navigate("/")
     }
     catch (err) {
-      setError(err?.response?.data || "Something went wrong");
-    
+      const errMsg = typeof err?.response?.data === 'string' 
+        ? err.response.data 
+        : (err?.response?.data?.message || err?.message || "Something went wrong");
+      setError(errMsg);
     }
   }
 
@@ -50,7 +52,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)} />
           </fieldset>
-          <p className='text-shadow-red-400'>{error}</p>
+          <p className="text-red-500 font-semibold text-center text-sm">{error}</p>
           <div className="card-actions justify-center my-3">
             <button className="btn btn-primary" onClick={handleLogin}>Login</button>
           </div>
